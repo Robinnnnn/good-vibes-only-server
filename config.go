@@ -9,6 +9,7 @@ import (
 const (
 	appEnv           = "APP_ENV"
 	baseURL          = "BASE_URL"
+	webBaseURL       = "WEB_BASE_URL"
 	port             = "PORT"
 	spotifyClientID  = "SPOTIFY_CLIENT_ID"
 	spotifySecretKey = "SPOTIFY_SECRET_KEY"
@@ -17,6 +18,7 @@ const (
 type applicationConfig struct {
 	AppEnv           string
 	BaseURL          string
+	WebBaseURL       string
 	Port             string
 	SpotifyClientID  string
 	SpotifySecretKey string
@@ -30,6 +32,7 @@ func getApplicationConfig() *applicationConfig {
 	config := &applicationConfig{
 		AppEnv:           viper.GetString(appEnv),
 		BaseURL:          viper.GetString(baseURL),
+		WebBaseURL:       viper.GetString(webBaseURL),
 		Port:             viper.GetString(port),
 		SpotifyClientID:  viper.GetString(spotifyClientID),
 		SpotifySecretKey: viper.GetString(spotifySecretKey),
@@ -48,6 +51,7 @@ func getApplicationConfig() *applicationConfig {
 func setDefaultConfig() {
 	viper.SetDefault(appEnv, "local")
 	viper.SetDefault(baseURL, "http://localhost:3001")
+	viper.SetDefault(webBaseURL, "http://localhost:3000")
 	viper.SetDefault(port, "3001")
 }
 

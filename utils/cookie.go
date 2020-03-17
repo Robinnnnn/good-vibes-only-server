@@ -12,6 +12,17 @@ func AddCookie(w http.ResponseWriter, key string, value string) {
 		Name:    key,
 		Value:   value,
 		Expires: expiry,
+		MaxAge:  60 * 10,
 	}
 	http.SetCookie(w, &cookie)
+}
+
+// RemoveCookie removes a cookie with a given key
+func RemoveCookie(w http.ResponseWriter, key string) {
+	deletion := http.Cookie{
+		Name:   key,
+		Value:  "",
+		MaxAge: 0,
+	}
+	http.SetCookie(w, &deletion)
 }

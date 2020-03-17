@@ -82,6 +82,7 @@ func (s spotifyController) HandleOAuthRedirect(w http.ResponseWriter, r *http.Re
 		http.Error(w, "State not found", http.StatusBadRequest)
 		return
 	}
+	utils.RemoveCookie(w, stateCookieKey)
 
 	vars := mux.Vars(r)
 	code := vars["code"]
@@ -101,7 +102,10 @@ func (s spotifyController) HandleOAuthRedirect(w http.ResponseWriter, r *http.Re
 		return
 	}
 
-	utils.RespondWithBody(w, body)
+	returnURL := fmt.Sprintf("%s/oauth", s.appConfig.WebBaseURL)
+	utils.AddCookie(w, "access-token", body.AccessToken)
+	utils.AddCookie(w, "refresh-token", body.RefreshToken)
+	http.Redirect(w, r, returnURL, http.StatusFound)
 }
 
 func (s spotifyController) getUserAuthTokens(code string) (*authGrantResponse, error) {
