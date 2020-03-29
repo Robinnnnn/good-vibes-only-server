@@ -22,5 +22,8 @@ func main() {
 
 	router := initializeRouter(controller)
 
-	http.ListenAndServe(fmt.Sprintf(":%s", appConfig.Port), router)
+	http.ListenAndServe(
+		fmt.Sprintf(":%s", appConfig.Port),
+		router,
+	)
 }

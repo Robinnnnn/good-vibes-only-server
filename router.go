@@ -22,9 +22,14 @@ func initializeRouter(s *spotifyController) http.Handler {
 	router.HandleFunc("/oauth", s.handleOAuthRedirect).Methods("GET").Queries("code", "{code}", "state", "{state}")
 	router.HandleFunc("/refresh", s.handleTokenRefresh).Methods("POST")
 
-	loggedRouter := handlers.LoggingHandler(os.Stdout, router)
+	routerWithLogs := handlers.LoggingHandler(os.Stdout, router)
+	routerWithCORS := handlers.CORS(
+		handlers.AllowedOrigins([]string{s.appConfig.WebBaseURL, s.appConfig.BaseURL}),
+		handlers.AllowedMethods([]string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodOptions}),
+		handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}),
+	)(routerWithLogs)
 
-	return loggedRouter
+	return routerWithCORS
 }
 
 func handleHealthcheck(w http.ResponseWriter, r *http.Request) {
