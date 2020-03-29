@@ -22,7 +22,7 @@ func RemoveCookie(w http.ResponseWriter, key string) {
 	deletion := http.Cookie{
 		Name:   key,
 		Value:  "",
-		MaxAge: 0,
+		MaxAge: -1,
 	}
 	http.SetCookie(w, &deletion)
 }

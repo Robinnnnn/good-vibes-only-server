@@ -19,7 +19,8 @@ func initializeRouter(s *spotifyController) http.Handler {
 	// Spotify routes
 	router.HandleFunc("/login", s.handleLogin).Methods("GET").Queries("playlistId", "{playlistId}")
 	router.HandleFunc("/login", s.handleLogin).Methods("GET")
-	router.HandleFunc("/oauth", s.HandleOAuthRedirect).Methods("GET").Queries("code", "{code}", "state", "{state}")
+	router.HandleFunc("/oauth", s.handleOAuthRedirect).Methods("GET").Queries("code", "{code}", "state", "{state}")
+	router.HandleFunc("/refresh", s.handleTokenRefresh).Methods("POST")
 
 	loggedRouter := handlers.LoggingHandler(os.Stdout, router)
 
