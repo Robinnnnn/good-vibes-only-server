@@ -51,7 +51,7 @@ func getApplicationConfig() *applicationConfig {
 func setDefaultConfig() {
 	viper.SetDefault(appEnv, "local")
 	viper.SetDefault(baseURL, "http://localhost:3001")
-	viper.SetDefault(webBaseURL, "http://localhost:3000")
+	viper.SetDefault(webBaseURL, "http://localhost:8888")
 	viper.SetDefault(port, "3001")
 }
 

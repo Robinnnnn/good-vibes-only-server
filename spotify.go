@@ -56,7 +56,7 @@ func newSpotifyController(
 
 func initSpotifyAuthClient(config *applicationConfig) *spotify.Authenticator {
 	redirectURL := fmt.Sprintf("%s/oauth", config.BaseURL)
-	auth := spotify.NewAuthenticator(redirectURL, spotify.ScopeUserReadPrivate)
+	auth := spotify.NewAuthenticator(redirectURL, spotify.ScopeStreaming, spotify.ScopeUserReadEmail, spotify.ScopeUserReadPrivate)
 	auth.SetAuthInfo(config.SpotifyClientID, config.SpotifySecretKey)
 	return &auth
 }
